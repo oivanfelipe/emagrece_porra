@@ -1,3 +1,4 @@
+import { ArrowLeft, Bike, Check } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ExerciseCard } from './ExerciseCard';
 import { RestTimer } from './RestTimer';
@@ -107,9 +108,10 @@ export function WorkoutSession({
       <div className="mb-4 flex items-center justify-between">
         <button
           onClick={onCancel}
-          className="text-sm font-semibold text-neutral-400"
+          className="flex items-center gap-1 text-sm font-semibold text-neutral-400"
         >
-          ← sair
+          <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
+          sair
         </button>
         <span className="text-sm font-bold tabular-nums text-neutral-300">
           {mm}:{ss.toString().padStart(2, '0')}
@@ -118,7 +120,7 @@ export function WorkoutSession({
 
       <div className="mb-4">
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-600 text-sm font-black text-white">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500 text-sm font-black text-neutral-950">
             {workout.id}
           </div>
           <h1 className="text-xl font-black text-white">{workout.title}</h1>
@@ -131,7 +133,7 @@ export function WorkoutSession({
       <div className="mb-5">
         <div className="h-1.5 w-full overflow-hidden rounded-full bg-neutral-800">
           <div
-            className="h-full rounded-full bg-red-600 transition-all"
+            className="h-full rounded-full bg-amber-500 transition-all"
             style={{ width: `${(doneSets / totalSets) * 100}%` }}
           />
         </div>
@@ -172,25 +174,29 @@ export function WorkoutSession({
           }`}
         >
           <div className="flex items-center justify-between gap-3">
-            <div>
-              <h3 className="text-base font-semibold text-white">
-                Cardio — Bicicleta
-              </h3>
-              <p className="text-xs text-neutral-400">
-                {workout.cardio.totalMin} min · {workout.cardio.description}
-              </p>
+            <div className="flex items-start gap-2">
+              <Bike className="mt-0.5 h-5 w-5 shrink-0 text-neutral-400" strokeWidth={2} />
+              <div>
+                <h3 className="text-base font-semibold text-white">
+                  Cardio — Bicicleta
+                </h3>
+                <p className="text-xs text-neutral-400">
+                  {workout.cardio.totalMin} min · {workout.cardio.description}
+                </p>
+              </div>
             </div>
             <button
               onClick={() =>
                 onChange({ ...session, cardioDone: !session.cardioDone })
               }
-              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border text-lg font-bold ${
+              aria-label={session.cardioDone ? 'Desmarcar cardio' : 'Marcar cardio'}
+              className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border ${
                 session.cardioDone
                   ? 'border-emerald-600 bg-emerald-600 text-white'
                   : 'border-neutral-700 bg-neutral-800 text-neutral-600'
               }`}
             >
-              {session.cardioDone ? '✓' : ''}
+              {session.cardioDone && <Check className="h-4 w-4" strokeWidth={3} />}
             </button>
           </div>
         </div>
@@ -200,7 +206,7 @@ export function WorkoutSession({
         <div className="mx-auto max-w-md">
           <button
             onClick={onFinish}
-            className="w-full rounded-xl bg-red-600 py-3.5 text-sm font-bold text-white active:bg-red-700"
+            className="w-full rounded-xl bg-amber-500 py-3.5 text-sm font-bold text-neutral-950 active:bg-amber-600"
           >
             Finalizar treino
           </button>

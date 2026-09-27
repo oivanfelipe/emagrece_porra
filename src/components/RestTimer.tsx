@@ -1,3 +1,4 @@
+import { Timer } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 interface RestTimerProps {
@@ -45,7 +46,7 @@ export function RestTimer({ seconds, label, onDismiss }: RestTimerProps) {
               cy="32"
               r="28"
               fill="none"
-              stroke={remaining === 0 ? '#22c55e' : '#e11d2e'}
+              stroke={remaining === 0 ? '#22c55e' : '#f59e0b'}
               strokeWidth="5"
               strokeDasharray={2 * Math.PI * 28}
               strokeDashoffset={2 * Math.PI * 28 * (1 - pct / 100)}
@@ -58,7 +59,8 @@ export function RestTimer({ seconds, label, onDismiss }: RestTimerProps) {
           </span>
         </div>
         <div className="flex-1">
-          <p className="text-xs uppercase tracking-wide text-neutral-400">
+          <p className="flex items-center gap-1 text-xs uppercase tracking-wide text-neutral-400">
+            <Timer className="h-3.5 w-3.5" strokeWidth={2.5} />
             Descanso
           </p>
           <p className="text-sm font-medium text-white">{label}</p>

@@ -1,3 +1,4 @@
+import { ArrowLeft, TrendingUp } from 'lucide-react';
 import { useState } from 'react';
 import { WORKOUTS, getWorkout } from '../data/workouts';
 import { exerciseHistory } from '../lib/history';
@@ -27,18 +28,21 @@ export function History({ history, onBack }: HistoryProps) {
   return (
     <div className="mx-auto max-w-md px-4 pb-10 pt-6">
       <div className="mb-4 flex items-center gap-3">
-        <button onClick={onBack} className="text-sm font-semibold text-neutral-400">
-          ←
+        <button onClick={onBack} aria-label="Voltar" className="text-neutral-400">
+          <ArrowLeft className="h-5 w-5" strokeWidth={2.5} />
         </button>
         <h1 className="text-xl font-black text-white">Histórico</h1>
       </div>
 
       <section className="mb-6 rounded-2xl border border-neutral-800 bg-neutral-900/60 p-4">
-        <p className="mb-2 text-sm font-bold text-white">Progressão por exercício</p>
+        <p className="mb-2 flex items-center gap-1.5 text-sm font-bold text-white">
+          <TrendingUp className="h-4 w-4 text-amber-500" strokeWidth={2.5} />
+          Progressão por exercício
+        </p>
         <select
           value={exerciseId}
           onChange={(e) => setExerciseId(e.target.value)}
-          className="mb-3 w-full rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-white outline-none focus:border-red-600"
+          className="mb-3 w-full rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-white outline-none focus:border-amber-600"
         >
           {ALL_EXERCISES.map((e) => (
             <option key={e.id} value={e.id}>

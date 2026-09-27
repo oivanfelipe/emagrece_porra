@@ -1,3 +1,4 @@
+import { Check, Lightbulb } from 'lucide-react';
 import type { ExerciseDef, ExerciseLog } from '../types';
 
 interface ExerciseCardProps {
@@ -33,7 +34,7 @@ export function ExerciseCard({
       }`}
     >
       {supersetLabel && (
-        <div className="mb-2 inline-block rounded-full bg-red-950/60 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-red-400">
+        <div className="mb-2 inline-block rounded-full bg-amber-950/60 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-amber-400">
           {supersetLabel}
         </div>
       )}
@@ -58,7 +59,10 @@ export function ExerciseCard({
         <span className="font-semibold text-neutral-400">Músculos:</span>{' '}
         {exercise.muscles}
       </p>
-      <p className="mt-1 text-xs italic text-neutral-500">💡 {exercise.tip}</p>
+      <p className="mt-1 flex items-start gap-1.5 text-xs italic text-neutral-500">
+        <Lightbulb className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-500" strokeWidth={2} />
+        {exercise.tip}
+      </p>
 
       {lastValues && (lastValues.weight != null || lastValues.reps != null) && (
         <p className="mt-2 text-xs text-neutral-500">
@@ -95,7 +99,7 @@ export function ExerciseCard({
                   e.target.value === '' ? null : Number(e.target.value),
                 )
               }
-              className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-2 py-2 text-center text-sm text-white outline-none focus:border-red-600"
+              className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-2 py-2 text-center text-sm text-white outline-none focus:border-amber-600"
             />
             <input
               type="number"
@@ -109,7 +113,7 @@ export function ExerciseCard({
                   e.target.value === '' ? null : Number(e.target.value),
                 )
               }
-              className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-2 py-2 text-center text-sm text-white outline-none focus:border-red-600"
+              className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-2 py-2 text-center text-sm text-white outline-none focus:border-amber-600"
             />
             <button
               onClick={() => onToggleSet(i)}
@@ -120,7 +124,7 @@ export function ExerciseCard({
                   : 'border-neutral-700 bg-neutral-800 text-neutral-600'
               }`}
             >
-              {set.completed ? '✓' : ''}
+              {set.completed && <Check className="h-4 w-4" strokeWidth={3} />}
             </button>
           </div>
         ))}

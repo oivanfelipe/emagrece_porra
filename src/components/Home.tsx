@@ -1,3 +1,4 @@
+import { Dumbbell, History as HistoryIcon } from 'lucide-react';
 import { PLAN_META, WORKOUTS } from '../data/workouts';
 import { formatDaysAgo, getLastSessionForWorkout, sessionsThisWeek } from '../lib/history';
 import type { WorkoutSession } from '../types';
@@ -14,7 +15,8 @@ export function Home({ history, onStart, onOpenHistory }: HomeProps) {
   return (
     <div className="mx-auto max-w-md px-4 pb-10 pt-6">
       <header className="mb-6">
-        <p className="text-xs font-bold uppercase tracking-widest text-red-500">
+        <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-amber-500">
+          <Dumbbell className="h-3.5 w-3.5" strokeWidth={2.5} />
           {PLAN_META.focus}
         </p>
         <h1 className="text-2xl font-black text-white">{PLAN_META.title}</h1>
@@ -32,13 +34,14 @@ export function Home({ history, onStart, onOpenHistory }: HomeProps) {
         </div>
       </header>
 
-      <div className="mb-6 rounded-xl border border-red-900/40 bg-red-950/20 p-4">
+      <div className="mb-6 rounded-xl border border-amber-900/40 bg-amber-950/10 p-4">
         <div className="flex items-center justify-between">
           <p className="text-sm font-semibold text-white">Esta semana</p>
           <button
             onClick={onOpenHistory}
-            className="text-xs font-semibold text-red-400 underline underline-offset-2"
+            className="flex items-center gap-1 text-xs font-semibold text-amber-400 underline underline-offset-2"
           >
+            <HistoryIcon className="h-3.5 w-3.5" strokeWidth={2.5} />
             ver histórico
           </button>
         </div>
@@ -47,7 +50,7 @@ export function Home({ history, onStart, onOpenHistory }: HomeProps) {
             <div
               key={i}
               className={`h-2 flex-1 rounded-full ${
-                i < weekCount ? 'bg-red-600' : 'bg-neutral-800'
+                i < weekCount ? 'bg-amber-500' : 'bg-neutral-800'
               }`}
             />
           ))}
@@ -64,10 +67,10 @@ export function Home({ history, onStart, onOpenHistory }: HomeProps) {
             <button
               key={w.id}
               onClick={() => onStart(w.id)}
-              className="w-full rounded-2xl border border-neutral-800 bg-neutral-900/60 p-4 text-left transition-colors active:border-red-700 active:bg-neutral-900"
+              className="w-full rounded-2xl border border-neutral-800 bg-neutral-900/60 p-4 text-left transition-colors active:border-amber-700 active:bg-neutral-900"
             >
               <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red-600 text-lg font-black text-white">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-500 text-lg font-black text-neutral-950">
                   {w.id}
                 </div>
                 <div className="min-w-0 flex-1">
