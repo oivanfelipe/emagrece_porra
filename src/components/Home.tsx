@@ -16,38 +16,38 @@ export function Home({ history, historyError, onStart, onOpenHistory }: HomeProp
   return (
     <div className="mx-auto max-w-md px-4 pb-10 pt-6">
       <header className="mb-6">
-        <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-amber-500">
+        <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-amber-600">
           <Dumbbell className="h-3.5 w-3.5" strokeWidth={2.5} />
           {PLAN_META.focus}
         </p>
-        <h1 className="text-2xl font-black text-white">{PLAN_META.title}</h1>
-        <p className="mt-1 text-sm text-neutral-400">{PLAN_META.goal}</p>
+        <h1 className="text-2xl font-black text-neutral-900">{PLAN_META.title}</h1>
+        <p className="mt-1 text-sm text-neutral-500">{PLAN_META.goal}</p>
 
-        <div className="mt-4 grid grid-cols-2 gap-2 text-xs text-neutral-400">
-          <div className="rounded-xl border border-neutral-800 bg-neutral-900/60 p-3">
-            <p className="font-bold text-white">{PLAN_META.frequency}</p>
+        <div className="mt-4 grid grid-cols-2 gap-2 text-xs text-neutral-500">
+          <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-3">
+            <p className="font-bold text-neutral-900">{PLAN_META.frequency}</p>
             <p>frequência</p>
           </div>
-          <div className="rounded-xl border border-neutral-800 bg-neutral-900/60 p-3">
-            <p className="font-bold text-white">{PLAN_META.duration}</p>
+          <div className="rounded-xl border border-neutral-200 bg-neutral-50 p-3">
+            <p className="font-bold text-neutral-900">{PLAN_META.duration}</p>
             <p>duração</p>
           </div>
         </div>
       </header>
 
       {historyError && (
-        <div className="mb-4 flex items-start gap-2 rounded-xl border border-red-900/50 bg-red-950/20 p-3 text-xs text-red-300">
+        <div className="mb-4 flex items-start gap-2 rounded-xl border border-red-300 bg-red-50 p-3 text-xs text-red-700">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2} />
           {historyError}
         </div>
       )}
 
-      <div className="mb-6 rounded-xl border border-amber-900/40 bg-amber-950/10 p-4">
+      <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4">
         <div className="flex items-center justify-between">
-          <p className="text-sm font-semibold text-white">Esta semana</p>
+          <p className="text-sm font-semibold text-neutral-900">Esta semana</p>
           <button
             onClick={onOpenHistory}
-            className="flex items-center gap-1 text-xs font-semibold text-amber-400 underline underline-offset-2"
+            className="flex items-center gap-1 text-xs font-semibold text-amber-700 underline underline-offset-2"
           >
             <HistoryIcon className="h-3.5 w-3.5" strokeWidth={2.5} />
             ver histórico
@@ -58,7 +58,7 @@ export function Home({ history, historyError, onStart, onOpenHistory }: HomeProp
             <div
               key={i}
               className={`h-2 flex-1 rounded-full ${
-                i < weekCount ? 'bg-amber-500' : 'bg-neutral-800'
+                i < weekCount ? 'bg-amber-500' : 'bg-neutral-200'
               }`}
             />
           ))}
@@ -75,14 +75,14 @@ export function Home({ history, historyError, onStart, onOpenHistory }: HomeProp
             <button
               key={w.id}
               onClick={() => onStart(w.id)}
-              className="w-full rounded-2xl border border-neutral-800 bg-neutral-900/60 p-4 text-left transition-colors active:border-amber-700 active:bg-neutral-900"
+              className="w-full rounded-2xl border border-neutral-200 bg-neutral-50 p-4 text-left transition-colors active:border-amber-400 active:bg-amber-50/40"
             >
               <div className="flex items-center gap-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-amber-500 text-lg font-black text-neutral-950">
                   {w.id}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-bold text-white">
+                  <p className="truncate text-sm font-bold text-neutral-900">
                     {w.title}
                   </p>
                   <p className="text-xs text-neutral-500">

@@ -28,21 +28,21 @@ export function History({ history, onBack }: HistoryProps) {
   return (
     <div className="mx-auto max-w-md px-4 pb-10 pt-6">
       <div className="mb-4 flex items-center gap-3">
-        <button onClick={onBack} aria-label="Voltar" className="text-neutral-400">
+        <button onClick={onBack} aria-label="Voltar" className="text-neutral-500">
           <ArrowLeft className="h-5 w-5" strokeWidth={2.5} />
         </button>
-        <h1 className="text-xl font-black text-white">Histórico</h1>
+        <h1 className="text-xl font-black text-neutral-900">Histórico</h1>
       </div>
 
-      <section className="mb-6 rounded-2xl border border-neutral-800 bg-neutral-900/60 p-4">
-        <p className="mb-2 flex items-center gap-1.5 text-sm font-bold text-white">
+      <section className="mb-6 rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
+        <p className="mb-2 flex items-center gap-1.5 text-sm font-bold text-neutral-900">
           <TrendingUp className="h-4 w-4 text-amber-500" strokeWidth={2.5} />
           Progressão por exercício
         </p>
         <select
           value={exerciseId}
           onChange={(e) => setExerciseId(e.target.value)}
-          className="mb-3 w-full rounded-lg border border-neutral-700 bg-neutral-800 px-3 py-2 text-sm text-white outline-none focus:border-amber-600"
+          className="mb-3 w-full rounded-lg border border-neutral-300 bg-neutral-100 px-3 py-2 text-sm text-neutral-900 outline-none focus:border-amber-600"
         >
           {ALL_EXERCISES.map((e) => (
             <option key={e.id} value={e.id}>
@@ -59,12 +59,12 @@ export function History({ history, onBack }: HistoryProps) {
             {progress.map((row, i) => (
               <div
                 key={i}
-                className="flex items-center justify-between rounded-lg bg-neutral-800/60 px-3 py-2 text-xs"
+                className="flex items-center justify-between rounded-lg bg-neutral-100 px-3 py-2 text-xs"
               >
-                <span className="text-neutral-400">
+                <span className="text-neutral-500">
                   {new Date(row.date).toLocaleDateString('pt-BR')}
                 </span>
-                <span className="font-semibold text-white">
+                <span className="font-semibold text-neutral-900">
                   {row.weight != null ? `${row.weight}kg` : '-'}
                   {row.reps != null ? ` x ${row.reps}` : ''}
                 </span>
@@ -75,7 +75,7 @@ export function History({ history, onBack }: HistoryProps) {
       </section>
 
       <section>
-        <p className="mb-2 text-sm font-bold text-white">Treinos concluídos</p>
+        <p className="mb-2 text-sm font-bold text-neutral-900">Treinos concluídos</p>
         {finished.length === 0 && (
           <p className="text-xs text-neutral-500">Nenhum treino concluído ainda.</p>
         )}
@@ -97,10 +97,10 @@ export function History({ history, onBack }: HistoryProps) {
             return (
               <div
                 key={s.id}
-                className="rounded-xl border border-neutral-800 bg-neutral-900/60 p-3"
+                className="rounded-xl border border-neutral-200 bg-neutral-50 p-3"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-white">
+                  <span className="text-sm font-semibold text-neutral-900">
                     Treino {s.workoutId} — {workout?.title}
                   </span>
                   <span className="text-xs text-neutral-500">

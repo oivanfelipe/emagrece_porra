@@ -108,12 +108,12 @@ export function WorkoutSession({
       <div className="mb-4 flex items-center justify-between">
         <button
           onClick={onCancel}
-          className="flex items-center gap-1 text-sm font-semibold text-neutral-400"
+          className="flex items-center gap-1 text-sm font-semibold text-neutral-500"
         >
           <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
           sair
         </button>
-        <span className="text-sm font-bold tabular-nums text-neutral-300">
+        <span className="text-sm font-bold tabular-nums text-neutral-600">
           {mm}:{ss.toString().padStart(2, '0')}
         </span>
       </div>
@@ -123,7 +123,7 @@ export function WorkoutSession({
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500 text-sm font-black text-neutral-950">
             {workout.id}
           </div>
-          <h1 className="text-xl font-black text-white">{workout.title}</h1>
+          <h1 className="text-xl font-black text-neutral-900">{workout.title}</h1>
         </div>
         <p className="mt-1 text-xs text-neutral-500">
           Aquecimento: {workout.warmupMin} min (bicicleta leve + mobilidade)
@@ -131,7 +131,7 @@ export function WorkoutSession({
       </div>
 
       <div className="mb-5">
-        <div className="h-1.5 w-full overflow-hidden rounded-full bg-neutral-800">
+        <div className="h-1.5 w-full overflow-hidden rounded-full bg-neutral-200">
           <div
             className="h-full rounded-full bg-amber-500 transition-all"
             style={{ width: `${(doneSets / totalSets) * 100}%` }}
@@ -169,18 +169,18 @@ export function WorkoutSession({
         <div
           className={`rounded-2xl border p-4 ${
             session.cardioDone
-              ? 'border-emerald-800/60 bg-emerald-950/20'
-              : 'border-neutral-800 bg-neutral-900/60'
+              ? 'border-emerald-300 bg-emerald-50'
+              : 'border-neutral-200 bg-neutral-50'
           }`}
         >
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-start gap-2">
-              <Bike className="mt-0.5 h-5 w-5 shrink-0 text-neutral-400" strokeWidth={2} />
+              <Bike className="mt-0.5 h-5 w-5 shrink-0 text-neutral-500" strokeWidth={2} />
               <div>
-                <h3 className="text-base font-semibold text-white">
+                <h3 className="text-base font-semibold text-neutral-900">
                   Cardio — Bicicleta
                 </h3>
-                <p className="text-xs text-neutral-400">
+                <p className="text-xs text-neutral-500">
                   {workout.cardio.totalMin} min · {workout.cardio.description}
                 </p>
               </div>
@@ -193,7 +193,7 @@ export function WorkoutSession({
               className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border ${
                 session.cardioDone
                   ? 'border-emerald-600 bg-emerald-600 text-white'
-                  : 'border-neutral-700 bg-neutral-800 text-neutral-600'
+                  : 'border-neutral-300 bg-neutral-100 text-neutral-400'
               }`}
             >
               {session.cardioDone && <Check className="h-4 w-4" strokeWidth={3} />}
@@ -202,7 +202,7 @@ export function WorkoutSession({
         </div>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-800 bg-neutral-950/95 p-4 backdrop-blur">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-neutral-200 bg-white/95 p-4 backdrop-blur">
         <div className="mx-auto max-w-md">
           <button
             onClick={onFinish}

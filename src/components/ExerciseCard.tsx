@@ -29,34 +29,34 @@ export function ExerciseCard({
     <div
       className={`rounded-2xl border p-4 transition-colors ${
         isDone
-          ? 'border-emerald-800/60 bg-emerald-950/20'
-          : 'border-neutral-800 bg-neutral-900/60'
+          ? 'border-emerald-300 bg-emerald-50'
+          : 'border-neutral-200 bg-neutral-50'
       }`}
     >
       {supersetLabel && (
-        <div className="mb-2 inline-block rounded-full bg-amber-950/60 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-amber-400">
+        <div className="mb-2 inline-block rounded-full bg-amber-100 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-amber-800">
           {supersetLabel}
         </div>
       )}
       <div className="flex items-start justify-between gap-2">
         <div>
-          <h3 className="text-base font-semibold text-white">
+          <h3 className="text-base font-semibold text-neutral-900">
             {exercise.name}
           </h3>
-          <p className="text-xs text-neutral-400">
+          <p className="text-xs text-neutral-500">
             {exercise.sets} x {exercise.repsRange} · descanso{' '}
             {exercise.restLabel}
           </p>
         </div>
         {isDone && (
-          <span className="shrink-0 rounded-full bg-emerald-500/20 px-2 py-1 text-xs font-bold text-emerald-400">
+          <span className="shrink-0 rounded-full bg-emerald-100 px-2 py-1 text-xs font-bold text-emerald-700">
             Concluído
           </span>
         )}
       </div>
 
       <p className="mt-2 text-xs text-neutral-500">
-        <span className="font-semibold text-neutral-400">Músculos:</span>{' '}
+        <span className="font-semibold text-neutral-600">Músculos:</span>{' '}
         {exercise.muscles}
       </p>
       <p className="mt-1 flex items-start gap-1.5 text-xs italic text-neutral-500">
@@ -67,7 +67,7 @@ export function ExerciseCard({
       {lastValues && (lastValues.weight != null || lastValues.reps != null) && (
         <p className="mt-2 text-xs text-neutral-500">
           Última vez:{' '}
-          <span className="font-semibold text-neutral-300">
+          <span className="font-semibold text-neutral-700">
             {lastValues.weight != null ? `${lastValues.weight}kg` : '-'}
             {lastValues.reps != null ? ` x ${lastValues.reps}` : ''}
           </span>
@@ -86,7 +86,7 @@ export function ExerciseCard({
             key={i}
             className="grid grid-cols-[28px_1fr_1fr_36px] items-center gap-2"
           >
-            <span className="text-sm font-bold text-neutral-400">{i + 1}</span>
+            <span className="text-sm font-bold text-neutral-600">{i + 1}</span>
             <input
               type="number"
               inputMode="decimal"
@@ -99,7 +99,7 @@ export function ExerciseCard({
                   e.target.value === '' ? null : Number(e.target.value),
                 )
               }
-              className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-2 py-2 text-center text-sm text-white outline-none focus:border-amber-600"
+              className="w-full rounded-lg border border-neutral-300 bg-neutral-100 px-2 py-2 text-center text-sm text-neutral-900 outline-none focus:border-amber-600"
             />
             <input
               type="number"
@@ -113,7 +113,7 @@ export function ExerciseCard({
                   e.target.value === '' ? null : Number(e.target.value),
                 )
               }
-              className="w-full rounded-lg border border-neutral-700 bg-neutral-800 px-2 py-2 text-center text-sm text-white outline-none focus:border-amber-600"
+              className="w-full rounded-lg border border-neutral-300 bg-neutral-100 px-2 py-2 text-center text-sm text-neutral-900 outline-none focus:border-amber-600"
             />
             <button
               onClick={() => onToggleSet(i)}
@@ -121,7 +121,7 @@ export function ExerciseCard({
               className={`flex h-9 w-9 items-center justify-center rounded-lg border text-lg font-bold transition-colors ${
                 set.completed
                   ? 'border-emerald-600 bg-emerald-600 text-white'
-                  : 'border-neutral-700 bg-neutral-800 text-neutral-600'
+                  : 'border-neutral-300 bg-neutral-100 text-neutral-400'
               }`}
             >
               {set.completed && <Check className="h-4 w-4" strokeWidth={3} />}
