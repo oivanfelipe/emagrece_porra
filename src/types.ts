@@ -7,6 +7,7 @@ export interface ExerciseDef {
   restLabel: string;
   muscles: string;
   tip: string;
+  image: string;
   supersetWith?: string;
 }
 

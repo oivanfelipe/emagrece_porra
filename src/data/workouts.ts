@@ -25,6 +25,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60-90s',
         muscles: 'Peito, ombros e tríceps',
         tip: 'Mantenha as costas apoiadas e movimento controlado.',
+        image: '/exercises/supino-maquina.jpg',
       },
       {
         id: 'a2',
@@ -35,6 +36,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60-90s',
         muscles: 'Costas e bíceps',
         tip: 'Mantenha o peito aberto e puxe até a altura do peito.',
+        image: '/exercises/puxada-frontal.jpg',
       },
       {
         id: 'a3',
@@ -45,6 +47,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60-90s',
         muscles: 'Costas e bíceps',
         tip: 'Mantenha as costas retas e puxe em direção ao abdômen.',
+        image: '/exercises/remada-baixa.jpg',
       },
       {
         id: 'a4',
@@ -55,6 +58,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60-90s',
         muscles: 'Ombros e tríceps',
         tip: 'Mantenha o core firme e movimento controlado.',
+        image: '/exercises/desenvolvimento-ombros.jpg',
       },
       {
         id: 'a5',
@@ -65,6 +69,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60s',
         muscles: 'Tríceps',
         tip: 'Mantenha os cotovelos junto ao corpo.',
+        image: '/exercises/triceps-polia.jpg',
       },
       {
         id: 'a6',
@@ -75,6 +80,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60s',
         muscles: 'Bíceps',
         tip: 'Movimento controlado, sem usar o tronco.',
+        image: '/exercises/rosca-biceps-polia.jpg',
       },
     ],
     cardio: {
@@ -97,6 +103,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60-90s',
         muscles: 'Costas e bíceps',
         tip: 'Puxe até a altura do peito e mantenha o peito aberto.',
+        image: '/exercises/puxada-frontal.jpg',
       },
       {
         id: 'b2',
@@ -107,6 +114,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60-90s',
         muscles: 'Peito, ombros e tríceps',
         tip: 'Ajuste o banco inclinado e mantenha as costas apoiadas.',
+        image: '/exercises/supino-inclinado.jpg',
       },
       {
         id: 'b3',
@@ -117,6 +125,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60-90s',
         muscles: 'Costas e bíceps',
         tip: 'Mantenha as costas retas e puxe em direção ao abdômen.',
+        image: '/exercises/remada-baixa.jpg',
       },
       {
         id: 'b4',
@@ -127,6 +136,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60s',
         muscles: 'Ombros (lateral)',
         tip: 'Movimento controlado, sem elevar demais os ombros.',
+        image: '/exercises/elevacao-lateral.jpg',
       },
       {
         id: 'b5',
@@ -137,6 +147,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60s (após os dois)',
         muscles: 'Tríceps',
         tip: 'Superset com Rosca Bíceps na Polia — descanse só depois dos dois.',
+        image: '/exercises/triceps-polia.jpg',
         supersetWith: 'b6',
       },
       {
@@ -148,6 +159,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60s (após os dois)',
         muscles: 'Bíceps',
         tip: 'Superset com Tríceps na Polia — descanse só depois dos dois.',
+        image: '/exercises/rosca-biceps-polia.jpg',
         supersetWith: 'b5',
       },
     ],
@@ -171,6 +183,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60-90s',
         muscles: 'Peito, ombros e tríceps',
         tip: 'Mantenha as costas apoiadas e movimento controlado.',
+        image: '/exercises/supino-maquina.jpg',
       },
       {
         id: 'c2',
@@ -181,6 +194,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60-90s',
         muscles: 'Costas e bíceps',
         tip: 'Puxe até a altura do peito e mantenha o peito aberto.',
+        image: '/exercises/puxada-frontal.jpg',
       },
       {
         id: 'c3',
@@ -191,6 +205,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60-90s',
         muscles: 'Costas e bíceps',
         tip: 'Mantenha as costas retas e puxe em direção ao abdômen.',
+        image: '/exercises/remada-baixa.jpg',
       },
       {
         id: 'c4',
@@ -201,6 +216,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60-90s',
         muscles: 'Ombros e tríceps',
         tip: 'Mantenha o core firme e movimento controlado.',
+        image: '/exercises/desenvolvimento-ombros.jpg',
       },
       {
         id: 'c5',
@@ -211,6 +227,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60s (após os dois)',
         muscles: 'Bíceps',
         tip: 'Superset com Tríceps na Polia — descanse só depois dos dois.',
+        image: '/exercises/rosca-biceps-polia.jpg',
         supersetWith: 'c6',
       },
       {
@@ -222,6 +239,7 @@ export const WORKOUTS: WorkoutDef[] = [
         restLabel: '60s (após os dois)',
         muscles: 'Tríceps',
         tip: 'Superset com Rosca Bíceps na Polia — descanse só depois dos dois.',
+        image: '/exercises/triceps-polia.jpg',
         supersetWith: 'c5',
       },
     ],

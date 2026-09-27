@@ -1,4 +1,6 @@
-import { Check, Lightbulb } from 'lucide-react';
+import { Check, Image, Lightbulb } from 'lucide-react';
+import { useState } from 'react';
+import { ExerciseImageModal } from './ExerciseImageModal';
 import type { ExerciseDef, ExerciseLog } from '../types';
 
 interface ExerciseCardProps {
@@ -24,6 +26,7 @@ export function ExerciseCard({
 }: ExerciseCardProps) {
   const completedCount = log.sets.filter((s) => s.completed).length;
   const isDone = completedCount === exercise.sets;
+  const [showImage, setShowImage] = useState(false);
 
   return (
     <div
@@ -48,11 +51,20 @@ export function ExerciseCard({
             {exercise.restLabel}
           </p>
         </div>
-        {isDone && (
-          <span className="shrink-0 rounded-full bg-emerald-100 px-2 py-1 text-xs font-bold text-emerald-700">
-            Concluído
-          </span>
-        )}
+        <div className="flex shrink-0 items-center gap-2">
+          <button
+            onClick={() => setShowImage(true)}
+            aria-label={`Ver foto de ${exercise.name}`}
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-amber-300 bg-amber-50 text-amber-700 active:bg-amber-100"
+          >
+            <Image className="h-4 w-4" strokeWidth={2} />
+          </button>
+          {isDone && (
+            <span className="rounded-full bg-emerald-100 px-2 py-1 text-xs font-bold text-emerald-700">
+              Concluído
+            </span>
+          )}
+        </div>
       </div>
 
       <p className="mt-2 text-xs text-neutral-500">
@@ -129,6 +141,14 @@ export function ExerciseCard({
           </div>
         ))}
       </div>
+
+      {showImage && (
+        <ExerciseImageModal
+          name={exercise.name}
+          image={exercise.image}
+          onClose={() => setShowImage(false)}
+        />
+      )}
     </div>
   );
 }
