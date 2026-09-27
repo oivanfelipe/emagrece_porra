@@ -1,15 +1,16 @@
-import { Dumbbell, History as HistoryIcon } from 'lucide-react';
+import { AlertTriangle, Dumbbell, History as HistoryIcon } from 'lucide-react';
 import { PLAN_META, WORKOUTS } from '../data/workouts';
 import { formatDaysAgo, getLastSessionForWorkout, sessionsThisWeek } from '../lib/history';
 import type { WorkoutSession } from '../types';
 
 interface HomeProps {
   history: WorkoutSession[];
+  historyError: string | null;
   onStart: (workoutId: string) => void;
   onOpenHistory: () => void;
 }
 
-export function Home({ history, onStart, onOpenHistory }: HomeProps) {
+export function Home({ history, historyError, onStart, onOpenHistory }: HomeProps) {
   const weekCount = sessionsThisWeek(history);
 
   return (
@@ -33,6 +34,13 @@ export function Home({ history, onStart, onOpenHistory }: HomeProps) {
           </div>
         </div>
       </header>
+
+      {historyError && (
+        <div className="mb-4 flex items-start gap-2 rounded-xl border border-red-900/50 bg-red-950/20 p-3 text-xs text-red-300">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2} />
+          {historyError}
+        </div>
+      )}
 
       <div className="mb-6 rounded-xl border border-amber-900/40 bg-amber-950/10 p-4">
         <div className="flex items-center justify-between">

@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { History } from './components/History';
 import { Home } from './components/Home';
 import { WorkoutSession } from './components/WorkoutSession';
 import { getWorkout } from './data/workouts';
-import { useLocalStorage } from './hooks/useLocalStorage';
+import {
+  deleteSession,
+  fetchFinishedHistory,
+  saveSession,
+} from './lib/workoutSessionsApi';
 import type { WorkoutSession as WorkoutSessionT } from './types';
 
 type View = { name: 'home' } | { name: 'history' } | { name: 'session' };
@@ -29,14 +33,35 @@ function createSession(workoutId: string): WorkoutSessionT | null {
 }
 
 function App() {
-  const [history, setHistory] = useLocalStorage<WorkoutSessionT[]>(
-    'treino-superior-history-v1',
-    [],
-  );
+  const [history, setHistory] = useState<WorkoutSessionT[]>([]);
+  const [historyError, setHistoryError] = useState<string | null>(null);
   const [activeSession, setActiveSession] = useState<WorkoutSessionT | null>(
     null,
   );
   const [view, setView] = useState<View>({ name: 'home' });
+  const saveTimeout = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    fetchFinishedHistory()
+      .then(setHistory)
+      .catch((err) => {
+        console.error('Failed to load workout history', err);
+        setHistoryError(
+          'Não foi possível carregar o histórico do Supabase. Verifique sua conexão.',
+        );
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!activeSession) return;
+    window.clearTimeout(saveTimeout.current);
+    saveTimeout.current = window.setTimeout(() => {
+      saveSession(activeSession).catch((err) =>
+        console.error('Failed to sync workout session', err),
+      );
+    }, 500);
+    return () => window.clearTimeout(saveTimeout.current);
+  }, [activeSession]);
 
   function handleStart(workoutId: string) {
     const session = createSession(workoutId);
@@ -45,10 +70,20 @@ function App() {
     setView({ name: 'session' });
   }
 
-  function handleFinish() {
+  async function handleFinish() {
     if (!activeSession) return;
+    window.clearTimeout(saveTimeout.current);
     const finished = { ...activeSession, finishedAt: new Date().toISOString() };
-    setHistory([...history, finished]);
+    try {
+      await saveSession(finished);
+    } catch (err) {
+      console.error('Failed to save finished workout session', err);
+      window.alert(
+        'Não foi possível salvar o treino no Supabase. Verifique sua conexão e tente novamente.',
+      );
+      return;
+    }
+    setHistory((prev) => [...prev, finished]);
     setActiveSession(null);
     setView({ name: 'home' });
   }
@@ -59,6 +94,12 @@ function App() {
       !window.confirm('Sair sem salvar este treino? O progresso será perdido.')
     ) {
       return;
+    }
+    window.clearTimeout(saveTimeout.current);
+    if (activeSession) {
+      deleteSession(activeSession.id).catch((err) =>
+        console.error('Failed to discard workout session', err),
+      );
     }
     setActiveSession(null);
     setView({ name: 'home' });
@@ -85,6 +126,7 @@ function App() {
   return (
     <Home
       history={history}
+      historyError={historyError}
       onStart={handleStart}
       onOpenHistory={() => setView({ name: 'history' })}
     />
