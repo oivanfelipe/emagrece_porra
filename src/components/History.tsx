@@ -1,11 +1,12 @@
-import { ArrowLeft, TrendingUp } from 'lucide-react';
+import { ArrowLeft, CalendarDays, TrendingUp } from 'lucide-react';
 import { useState } from 'react';
 import { WORKOUTS, getWorkout } from '../data/workouts';
 import { exerciseHistory } from '../lib/history';
-import type { WorkoutSession } from '../types';
+import type { WeeklySummary, WorkoutSession } from '../types';
 
 interface HistoryProps {
   history: WorkoutSession[];
+  weeks: WeeklySummary[];
   onBack: () => void;
 }
 
@@ -17,7 +18,7 @@ const ALL_EXERCISES = WORKOUTS.flatMap((w) => w.exercises).reduce(
   [] as { id: string; name: string }[],
 );
 
-export function History({ history, onBack }: HistoryProps) {
+export function History({ history, weeks, onBack }: HistoryProps) {
   const [exerciseId, setExerciseId] = useState(ALL_EXERCISES[0]?.id ?? '');
   const finished = [...history]
     .filter((s) => s.finishedAt)
@@ -72,6 +73,47 @@ export function History({ history, onBack }: HistoryProps) {
             ))}
           </div>
         )}
+      </section>
+
+      <section className="mb-6">
+        <p className="mb-2 flex items-center gap-1.5 text-sm font-bold text-neutral-900">
+          <CalendarDays className="h-4 w-4 text-amber-500" strokeWidth={2.5} />
+          Semanas
+        </p>
+        {weeks.length === 0 && (
+          <p className="text-xs text-neutral-500">
+            O resumo semanal aparece depois do primeiro treino concluído.
+          </p>
+        )}
+        <div className="space-y-2">
+          {weeks.map((w) => {
+            const [y, m, d] = w.weekStart.split('-').map(Number);
+            const label = new Date(y, m - 1, d).toLocaleDateString('pt-BR', {
+              day: '2-digit',
+              month: '2-digit',
+            });
+            return (
+              <div
+                key={w.weekStart}
+                className="rounded-xl border border-neutral-200 bg-neutral-50 p-3"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-semibold text-neutral-900">
+                    Semana de {label}
+                  </span>
+                  <span className="text-xs text-neutral-500">
+                    {w.workoutsCount} de 3 treinos
+                  </span>
+                </div>
+                <p className="mt-1 text-xs text-neutral-500">
+                  {w.workoutIds.join(' · ')} · {w.completedSets}/{w.totalSets}{' '}
+                  séries · {w.volumeKg.toLocaleString('pt-BR')} kg
+                  {w.cardioCount > 0 ? ` · cardio ${w.cardioCount}x` : ''}
+                </p>
+              </div>
+            );
+          })}
+        </div>
       </section>
 
       <section>
