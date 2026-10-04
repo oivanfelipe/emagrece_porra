@@ -1,4 +1,4 @@
-import type { WorkoutSession } from '../types';
+import type { WeeklySummary, WorkoutSession } from '../types';
 
 export function getLastSetLog(
   history: WorkoutSession[],
@@ -70,4 +70,46 @@ export function exerciseHistory(
     }
   }
   return rows.reverse();
+}
+
+function pad(n: number): string {
+  return String(n).padStart(2, '0');
+}
+
+export function weekStartOf(date: Date | string): string {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); // Monday
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
+export function buildWeeklySummary(
+  history: WorkoutSession[],
+  weekStart: string,
+): WeeklySummary {
+  const sessions = history.filter(
+    (s) => s.finishedAt && weekStartOf(s.finishedAt) === weekStart,
+  );
+  let totalSets = 0;
+  let completedSets = 0;
+  let volumeKg = 0;
+  for (const s of sessions) {
+    for (const e of s.exercises) {
+      totalSets += e.sets.length;
+      for (const set of e.sets) {
+        if (!set.completed) continue;
+        completedSets += 1;
+        volumeKg += (set.weight ?? 0) * (set.reps ?? 0);
+      }
+    }
+  }
+  return {
+    weekStart,
+    workoutsCount: sessions.length,
+    workoutIds: sessions.map((s) => s.workoutId),
+    totalSets,
+    completedSets,
+    volumeKg: Math.round(volumeKg),
+    cardioCount: sessions.filter((s) => s.cardioDone).length,
+  };
 }

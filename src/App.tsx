@@ -3,12 +3,20 @@ import { History } from './components/History';
 import { Home } from './components/Home';
 import { WorkoutSession } from './components/WorkoutSession';
 import { getWorkout } from './data/workouts';
+import { buildWeeklySummary, weekStartOf } from './lib/history';
+import {
+  fetchWeeklySummaries,
+  saveWeeklySummary,
+} from './lib/weeklySummariesApi';
 import {
   deleteSession,
   fetchFinishedHistory,
   saveSession,
 } from './lib/workoutSessionsApi';
-import type { WorkoutSession as WorkoutSessionT } from './types';
+import type {
+  WeeklySummary,
+  WorkoutSession as WorkoutSessionT,
+} from './types';
 
 type View = { name: 'home' } | { name: 'history' } | { name: 'session' };
 
@@ -34,6 +42,7 @@ function createSession(workoutId: string): WorkoutSessionT | null {
 
 function App() {
   const [history, setHistory] = useState<WorkoutSessionT[]>([]);
+  const [weeks, setWeeks] = useState<WeeklySummary[]>([]);
   const [historyError, setHistoryError] = useState<string | null>(null);
   const [activeSession, setActiveSession] = useState<WorkoutSessionT | null>(
     null,
@@ -50,6 +59,12 @@ function App() {
           'Não foi possível carregar o histórico do Supabase. Verifique sua conexão.',
         );
       });
+  }, []);
+
+  useEffect(() => {
+    fetchWeeklySummaries()
+      .then(setWeeks)
+      .catch((err) => console.error('Failed to load weekly summaries', err));
   }, []);
 
   useEffect(() => {
@@ -83,7 +98,20 @@ function App() {
       );
       return;
     }
-    setHistory((prev) => [...prev, finished]);
+    const nextHistory = [...history, finished];
+    setHistory(nextHistory);
+    const summary = buildWeeklySummary(
+      nextHistory,
+      weekStartOf(finished.finishedAt as string),
+    );
+    setWeeks((prev) =>
+      [summary, ...prev.filter((w) => w.weekStart !== summary.weekStart)].sort(
+        (a, b) => b.weekStart.localeCompare(a.weekStart),
+      ),
+    );
+    saveWeeklySummary(summary).catch((err) =>
+      console.error('Failed to save weekly summary', err),
+    );
     setActiveSession(null);
     setView({ name: 'home' });
   }
@@ -120,7 +148,7 @@ function App() {
   }
 
   if (view.name === 'history') {
-    return <History history={history} onBack={() => setView({ name: 'home' })} />;
+    return <History history={history} weeks={weeks} onBack={() => setView({ name: 'home' })} />;
   }
 
   return (

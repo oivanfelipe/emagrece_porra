@@ -44,3 +44,13 @@ export interface WorkoutSession {
   exercises: ExerciseLog[];
   cardioDone: boolean;
 }
+
+export interface WeeklySummary {
+  weekStart: string; // YYYY-MM-DD (Monday, local time)
+  workoutsCount: number;
+  workoutIds: string[];
+  totalSets: number;
+  completedSets: number;
+  volumeKg: number;
+  cardioCount: number;
+}
