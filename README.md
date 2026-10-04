@@ -1,8 +1,8 @@
 # Treino Superior
 
 App web mobile-first para acompanhar o plano de treino superior (foco:
-emagrecer e ganhar músculo), com 3 treinos alternados — A (Peito + Costas +
-Braços), B (Costas + Peito + Ombros) e C (Superior Completo).
+emagrecer e ganhar músculo), com 3 treinos alternados — A (Peito + Tríceps),
+B (Costas + Bíceps) e C (Ombros + Braços).
 
 ## Funcionalidades
 
