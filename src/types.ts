@@ -48,6 +48,7 @@ export interface WorkoutSession {
 export interface WeeklySummary {
   weekStart: string; // YYYY-MM-DD (Monday, local time)
   workoutsCount: number;
+  finishedCount: number;
   workoutIds: string[];
   totalSets: number;
   completedSets: number;

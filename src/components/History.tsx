@@ -20,9 +20,7 @@ const ALL_EXERCISES = WORKOUTS.flatMap((w) => w.exercises).reduce(
 
 export function History({ history, weeks, onBack }: HistoryProps) {
   const [exerciseId, setExerciseId] = useState(ALL_EXERCISES[0]?.id ?? '');
-  const finished = [...history]
-    .filter((s) => s.finishedAt)
-    .reverse();
+  const sessions = [...history].reverse();
 
   const progress = exerciseHistory(history, exerciseId);
 
@@ -103,6 +101,9 @@ export function History({ history, weeks, onBack }: HistoryProps) {
                   </span>
                   <span className="text-xs text-neutral-500">
                     {w.workoutsCount} de 3 treinos
+                    {w.finishedCount < w.workoutsCount
+                      ? ` (${w.finishedCount} finalizados)`
+                      : ''}
                   </span>
                 </div>
                 <p className="mt-1 text-xs text-neutral-500">
@@ -117,12 +118,12 @@ export function History({ history, weeks, onBack }: HistoryProps) {
       </section>
 
       <section>
-        <p className="mb-2 text-sm font-bold text-neutral-900">Treinos concluídos</p>
-        {finished.length === 0 && (
-          <p className="text-xs text-neutral-500">Nenhum treino concluído ainda.</p>
+        <p className="mb-2 text-sm font-bold text-neutral-900">Treinos</p>
+        {sessions.length === 0 && (
+          <p className="text-xs text-neutral-500">Nenhum treino registrado ainda.</p>
         )}
         <div className="space-y-2">
-          {finished.map((s) => {
+          {sessions.map((s) => {
             const workout = getWorkout(s.workoutId);
             const durationMin = s.finishedAt
               ? Math.round(
@@ -146,13 +147,14 @@ export function History({ history, weeks, onBack }: HistoryProps) {
                     Treino {s.workoutId} — {workout?.title}
                   </span>
                   <span className="text-xs text-neutral-500">
-                    {new Date(s.finishedAt as string).toLocaleDateString('pt-BR')}
+                    {new Date(s.finishedAt ?? s.startedAt).toLocaleDateString('pt-BR')}
                   </span>
                 </div>
                 <p className="mt-1 text-xs text-neutral-500">
                   {doneSets}/{totalSets} séries
                   {durationMin != null ? ` · ${durationMin} min` : ''}
                   {s.cardioDone ? ' · cardio ok' : ''}
+                  {s.finishedAt ? '' : ' · não finalizado'}
                 </p>
               </div>
             );
