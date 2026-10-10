@@ -32,11 +32,10 @@ function toRow(session: WorkoutSession) {
   };
 }
 
-export async function fetchFinishedHistory(): Promise<WorkoutSession[]> {
+export async function fetchAllSessions(): Promise<WorkoutSession[]> {
   const { data, error } = await supabase
     .from('workout_sessions')
     .select('*')
-    .not('finished_at', 'is', null)
     .order('started_at', { ascending: true });
 
   if (error) throw error;

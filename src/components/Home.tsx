@@ -1,16 +1,37 @@
-import { AlertTriangle, Dumbbell, History as HistoryIcon } from 'lucide-react';
-import { PLAN_META, WORKOUTS } from '../data/workouts';
-import { formatDaysAgo, getLastSessionForWorkout, sessionsThisWeek } from '../lib/history';
+import {
+  AlertTriangle,
+  Dumbbell,
+  History as HistoryIcon,
+  Play,
+} from 'lucide-react';
+import { PLAN_META, WORKOUTS, getWorkout } from '../data/workouts';
+import {
+  completedSetCount,
+  formatDaysAgo,
+  getLastSessionForWorkout,
+  sessionsThisWeek,
+} from '../lib/history';
 import type { WorkoutSession } from '../types';
 
 interface HomeProps {
   history: WorkoutSession[];
   historyError: string | null;
+  pending: WorkoutSession | null;
+  onResume: () => void;
+  onDiscardPending: () => void;
   onStart: (workoutId: string) => void;
   onOpenHistory: () => void;
 }
 
-export function Home({ history, historyError, onStart, onOpenHistory }: HomeProps) {
+export function Home({
+  history,
+  historyError,
+  pending,
+  onResume,
+  onDiscardPending,
+  onStart,
+  onOpenHistory,
+}: HomeProps) {
   const weekCount = sessionsThisWeek(history);
 
   return (
@@ -42,6 +63,34 @@ export function Home({ history, historyError, onStart, onOpenHistory }: HomeProp
         </div>
       )}
 
+      {pending && (
+        <div className="mb-4 rounded-xl border border-emerald-300 bg-emerald-50 p-4">
+          <p className="text-sm font-bold text-neutral-900">
+            Treino {pending.workoutId} em andamento
+          </p>
+          <p className="mt-0.5 text-xs text-neutral-600">
+            {getWorkout(pending.workoutId)?.title} ·{' '}
+            {completedSetCount(pending)} séries marcadas ·{' '}
+            {formatDaysAgo(pending.startedAt)}
+          </p>
+          <div className="mt-3 flex items-center gap-3">
+            <button
+              onClick={onResume}
+              className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-emerald-600 py-2.5 text-sm font-bold text-white active:bg-emerald-700"
+            >
+              <Play className="h-4 w-4" strokeWidth={2.5} />
+              Continuar treino
+            </button>
+            <button
+              onClick={onDiscardPending}
+              className="text-xs font-semibold text-neutral-500 underline underline-offset-2"
+            >
+              descartar
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 p-4">
         <div className="flex items-center justify-between">
           <p className="text-sm font-semibold text-neutral-900">Esta semana</p>
@@ -64,7 +113,7 @@ export function Home({ history, historyError, onStart, onOpenHistory }: HomeProp
           ))}
         </div>
         <p className="mt-1.5 text-xs text-neutral-500">
-          {weekCount} de 3 treinos concluídos
+          {weekCount} de 3 treinos feitos
         </p>
       </div>
 
@@ -92,7 +141,7 @@ export function Home({ history, historyError, onStart, onOpenHistory }: HomeProp
                 </div>
                 <div className="shrink-0 text-right">
                   <p className="text-xs text-neutral-500">
-                    {last ? formatDaysAgo(last.finishedAt as string) : 'nunca feito'}
+                    {last ? formatDaysAgo(last.finishedAt ?? last.startedAt) : 'nunca feito'}
                   </p>
                 </div>
               </div>
